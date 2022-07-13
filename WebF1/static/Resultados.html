@@ -1,0 +1,85 @@
+{% extends "Padre.html" %}
+{% load static %}
+{% block ContenidoDinamico %}
+<!-- Seccion con un API form -->
+
+<!-- Muestro info de escuderias -->
+{% if teams %}
+    <h4>Escuderias:</h4>
+    {% for esc in teams %}
+    
+        <p>{{ esc.escuderia}}</p>
+        <p>{{ esc.nacionalidad}}</p>
+    
+    {% endfor %}
+{% else %}
+    <p>No hay escuderias registradas con ese nombre</p>
+{% endif %}
+
+<!-- Muestro info de empleados -->
+{% if empleados %}
+    <h4>Empleados:</h4>
+    {% for emp in empleados %}
+    
+        <p>{{ emp.nombre}}</p>
+        <p>{{ emp.nacionalidad}}</p>
+    
+    {% endfor %}
+{% else %}
+    <p>No hay empleados registrados con ese nombre</p>
+{% endif %}
+
+<!-- Muestro info de ingenieros -->
+{% if ingenieros %}
+    <h4>Ingenieros:</h4>
+    {% for ing in ingenieros %}
+    
+        <p>{{ ing.nombre}}</p>
+        <p>{{ ing.nacionalidad}}</p>
+    
+    {% endfor %}
+{% else %}
+    <p>No hay ingenieros registrados con ese nombre</p>
+{% endif %}
+
+
+<!-- Muestro info de pilotos -->
+{% if pilotos %}
+    <h4>Pilotos:</h4>
+    {% for pil in pilotos %}
+    
+        <p>{{ pil.nombre}}</p>
+        <p>{{ pil.nacionalidad}}</p>
+    
+    {% endfor %}
+{% else %}
+    <p>No hay pilotos registrados con ese nombre</p>
+{% endif %}
+
+
+<!-- Muestro info de fans -->
+{% if Fans %}
+    <h4>Fans:</h4>
+    {% for fan in Fans %}
+    
+        <p>{{ fan.nombre}}</p>
+        <p>{{ fan.apellido}}</p>
+    
+    {% endfor %}
+{% else %}
+    <p>No hay fans registrados con ese nombre</p>
+{% endif %}    
+<!-- Muestro info de periodistas -->
+{% if periodistas %}
+    <h4>Periodistas:</h4>
+    {% for per in periodistas %}
+    
+        <p>{{ per.nombre}}</p>
+        <p>{{ per.matricula}}</p>
+    
+    {% endfor %}
+{% else %}
+    <p>No hay periodistas registrados con ese nombre</p>
+{% endif %}    
+
+{% endblock %}
