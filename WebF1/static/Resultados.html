@@ -4,25 +4,35 @@
 <!-- Seccion con un API form -->
 
 <!-- Muestro info de escuderias -->
+<h5 class="section-title">Escuderias:</h5>
 {% if teams %}
-    <h4>Escuderias:</h4>
     {% for esc in teams %}
     
-        <p>{{ esc.escuderia}}</p>
-        <p>{{ esc.nacionalidad}}</p>
-    
+        <p>Nombre: {{ esc.escuderia}}</p>
+        <p>Nacionalidad: {{ esc.nacionalidad}}</p>
+        <p>Patrocinador: {{  esc.patrocinador }}</p>
+        <p>Prooverdor del motor: {{ esc.proov_motor}}</p>
+        <p>GP anfitrion: {{ esc.gp_anfitrion}}</p>
+        <p>Piloto Principal: {{  esc.pil_ppal}}</p>
+        <p>Piloto secundario: {{  esc.pil_sec}}</p>
+        <p>Cantidad de empleados: {{ esc.cant_emp}}</p>
+
     {% endfor %}
 {% else %}
     <p>No hay escuderias registradas con ese nombre</p>
 {% endif %}
 
 <!-- Muestro info de empleados -->
+<h4>Empleados:</h4>
 {% if empleados %}
-    <h4>Empleados:</h4>
     {% for emp in empleados %}
     
-        <p>{{ emp.nombre}}</p>
-        <p>{{ emp.nacionalidad}}</p>
+        <p>Nombre: {{ emp.nombre }}</p>
+        <p>Apellido: {{ emp.apellido }}</p>
+        <p>Nacionalidad: {{ emp.nacionalidad }}</p>
+        <p>Edad: {{  emp.edad }} años</p>
+        <p>Escuderia: {{ emp.escuderia }}</p>
+        <p>Puesto: {{ emp.puesto }}</p>
     
     {% endfor %}
 {% else %}
@@ -30,12 +40,22 @@
 {% endif %}
 
 <!-- Muestro info de ingenieros -->
+<h4>Ingenieros:</h4>
 {% if ingenieros %}
-    <h4>Ingenieros:</h4>
+
     {% for ing in ingenieros %}
     
-        <p>{{ ing.nombre}}</p>
-        <p>{{ ing.nacionalidad}}</p>
+        <p>Nombre: {{ ing.nombre}}</p>
+        <p>Apellido: {{ ing.apellido}}</p>
+        <p>Nacionalidad: {{ ing.nacionalidad}}</p>
+        <p>Edad: {{ ing.edad}} años</p>
+        <p>Escuderia: {{ ing.escuderia}}</p>
+        <p>Titulo: {{ ing.titulo}}</p>
+        <p>Especialidad: {{ ing.especialidad}}</p>
+        <p>Universidad: {{ ing.universidad}}</p>
+        <p>Experiencia: {{ ing.exp}} años</p>
+        <p>Email: {{ ing.email}}</p>
+
     
     {% endfor %}
 {% else %}
@@ -44,12 +64,21 @@
 
 
 <!-- Muestro info de pilotos -->
+<h4>Pilotos:</h4>
 {% if pilotos %}
-    <h4>Pilotos:</h4>
+
     {% for pil in pilotos %}
     
-        <p>{{ pil.nombre}}</p>
-        <p>{{ pil.nacionalidad}}</p>
+    <p>Nombre: {{ pil.nombre}}</p>
+    <p>Apellido: {{ pil.apellido}}</p>
+    <p>Nacionalidad: {{ pil.nacionalidad}}</p>
+    <p>Edad: {{ pil.edad}} años</p>
+    <p>Escuderia: {{ pil.escuderia}}</p>
+    <p>Experiencia: {{ pil.exp}} años</p>
+    <p>Campeonatos disputados: {{ pil.camp_disp}}</p>
+    <p>Campeonatos ganados: {{ pil.camp_gan}}</p>
+    <p>Circuito preferido: {{ pil.circuito}}</p>
+
     
     {% endfor %}
 {% else %}
@@ -58,24 +87,31 @@
 
 
 <!-- Muestro info de fans -->
+<h4>Fans:</h4>
 {% if Fans %}
-    <h4>Fans:</h4>
+
     {% for fan in Fans %}
     
-        <p>{{ fan.nombre}}</p>
-        <p>{{ fan.apellido}}</p>
+        <p>Nombre: {{ fan.nombre}}</p>
+        <p>Apellido: {{ fan.apellido}}</p>
+        <p>Email: {{ fan.email}}</p>
     
     {% endfor %}
 {% else %}
     <p>No hay fans registrados con ese nombre</p>
 {% endif %}    
+
 <!-- Muestro info de periodistas -->
+<h4>Periodistas:</h4>
 {% if periodistas %}
-    <h4>Periodistas:</h4>
+
     {% for per in periodistas %}
     
-        <p>{{ per.nombre}}</p>
-        <p>{{ per.matricula}}</p>
+        <p>Nombre: {{ per.nombre}}</p>
+        <p>Apellido: {{ per.apellido}}</p>
+        <p>Medio Informativo: {{ per.medio}}</p>
+        <p>Matricula Profesional: {{ per.matricula}}</p>
+        <p>Email: {{ per.email}}</p>
     
     {% endfor %}
 {% else %}

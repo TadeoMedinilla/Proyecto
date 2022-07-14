@@ -21,13 +21,14 @@ def Escuderias(request):
             escuderia= Team( escuderia = info['escuderia'],
                         nacionalidad = info['nacionalidad'],
                         patrocinador = info ['patrocinador'],
-                        proov_motor = info['proovedor del motor'],
-                        mod_motor = info['modelo de motor'],
-                        proov_chasis = info['modelo de chasis'],
-                        gp_anfitrion = info['GP anfitrion'],
-                        pil_ppal = info['piloto principal'],
-                        pil_sec = info['piloto secundario'],
-                        cant_emp = info['cantidad de empleados'])
+                        proov_motor = info['proovedor_motor'],
+                        mod_motor = info['modelo_del_motor'],
+                        proov_chasis = info['proovedor_chasis'],
+                        mod_chasis = info['modelo_chasis'],
+                        gp_anfitrion = info['gp_anfitrion'],
+                        pil_ppal = info['piloto_principal'],
+                        pil_sec = info['piloto_secundario'],
+                        cant_emp = info['cantidad_de_empleados'])
             escuderia.save()
             return render(request, 'Inicio.html')
     else:
@@ -48,11 +49,6 @@ def Pilotos(request):
             piloto = Piloto ( escuderia = info['escuderia'],
                         nacionalidad = info['nacionalidad'],
                         patrocinador = info ['patrocinador'],
-                        proov_motor = info['proovedor_motor'],
-                        mod_motor = info['modelo_del_motor'],
-                        proov_chasis = info['modelo_chasis'],
-                        gp_anfitrion = info['gp_anfitrion'],
-                        cant_emp = info['cantidad_de_empleados'],
                         nombre = info['nombre'],
                         apellido=info['apellido'],
                         edad=info['edad'],
@@ -127,9 +123,8 @@ def Periodistas(request):
         if MiForm.is_valid:
 
             info = MiForm.cleaned_data
-            periodista =  Fan ( nombre = info['nombre'],
+            periodista =  Periodista ( nombre = info['nombre'],
                         apellido=info['apellido'],
-                        edad=info['edad'],
                         medio=info['medio'],
                         matricula=info['matricula'],
                         email=info['email'])
@@ -141,7 +136,7 @@ def Periodistas(request):
     return render(request, 'Periodistas.html', {'MiForm': MiForm})
 
 #A partir de aca estan las funciones necesarias para la busqueda en la BD
-#        MODIFICAR
+
 def Busqueda(request):
     
     return render(request, 'Busqueda.html/')
@@ -172,4 +167,4 @@ def Buscar(request):
                                                     "periodistas":periodista} )
     else:
         return render(request, 'Busqueda.html/', {"error": 'No hay datos'})
-    #return HttpResponse(respuesta)
+        
