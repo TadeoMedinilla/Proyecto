@@ -1,7 +1,7 @@
 {% extends "Padre.html" %}
 {% load static %}
 {% block ContenidoDinamico %}
-<!-- Seccion con un API form -->
+<!-- Seccion con info de escuderias y API form -->
 
 <section class="section" id="about">
 
@@ -59,7 +59,7 @@
     </div>
 </section>
 
-{% if form.errors %}
+{% if MiForm.errors %}
 <p>Estan mal los datos</p>
 {% endif %}
 
@@ -67,7 +67,7 @@
     {% csrf_token %}
         <table>
             
-            {{form.as_p}}
+            {{ MiForm.as_table }}
 
         </table>
     <input type="submit", value="Enviar">

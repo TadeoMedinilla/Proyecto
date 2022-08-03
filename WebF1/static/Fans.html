@@ -59,17 +59,13 @@
     </div>
 </section>
 
-{% if MiForm.errors %}
+{% if form.errors %}
 <p>Estan mal los datos</p>
 {% endif %}
 
 <form action="" method="post">
     {% csrf_token %}
-        <table>
-            
-            {{MiForm.as_table}}
-
-        </table>
+        {{form.as_p}}
     <input type="submit", value="Enviar">
 </form>
 

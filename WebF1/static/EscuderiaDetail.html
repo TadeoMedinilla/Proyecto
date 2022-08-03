@@ -1,0 +1,82 @@
+{% extends "Padre.html" %}
+{% load static %}
+{% block ContenidoDinamico %}
+<!-- Seccion con info de Pilotos y API form -->
+
+
+<section class="section" id="about">
+
+    <div class="container">
+
+        <div class="row align-items-center mr-auto">
+            <!-- <div class="col-md-4">
+                
+                <h3 class="section-title">Fans</h3>
+                <p>Aqui se enlistan todas los fans registrados:</p>
+                <h6 class="xs-font mb-6"><a href="{% url 'Fans' %}">Registrarse como fan.</a></h6>
+
+            </div> --> 
+            
+            <div class="col-sm-6 col-md-4">
+                <div class="widget">
+                    <div class="icon-wrapper">
+                        <i class="ti-cup"></i>
+                    </div>
+                    <div class="infos-wrapper">
+                        <h4 class="text-primary">{{team.escuderia}}</h4>
+                        
+                        <p>Nacionalidad: {{ team.nacionalidad }}</p>
+                        <p>Patrocinador: {{ team.patrocinador }}</p>
+                        <p>Proovedor del motor: {{ team.proov_motor }}</p>
+                        <p>Modelo del motor: {{ team.mod_motor }}</p>
+                        <p>Proovedor del chasis: {{ team.proov_chasis }}</p>
+                        <p>Modelo del chasis: {{ team.mod_chasis }}</p>
+                        <p>GP anfitrion: {{ team.gp_anfitrion }}</p>
+                        <p>Piloto principal: {{ team.pil_ppal }}</p>
+                        <p>Piloto secundario: {{ team.pil_sec }}</p>
+                        <p>Cantidad de empleados: {{ team.cant_emp }}</p>
+                        
+                        <div class="widget">
+                            &nbsp;<a class="nav-link btn btn-primary" href="{% url 'EliminarEscuderia' team.pk %}"><i class="ti-trash"></i></a>&nbsp;
+                            &nbsp;<a class="nav-link btn btn-primary" href="{% url 'ModificarEscuderia' team.pk %}"><i class="ti-marker-alt"></i></a>&nbsp;
+                            
+                        </div>                   
+                    </div>
+                </div>
+                <!-- <div class="widget">
+                    <div class="icon-wrapper">
+                        <i class="ti-money"></i>
+                    </div>
+                    <div class="infos-wrapper">
+                        <h4 class="text-primary">10</h4>
+                        <p>Escuderias de alto nivel</p>
+                    </div>
+                </div> -->
+            </div>
+            
+            <!--
+            <div class="col-sm-6 col-md-4">
+                <div class="widget">
+                    <div class="icon-wrapper">
+                        <i class="ti-star"></i>
+                    </div>
+                    <div class="infos-wrapper">
+                        <h4 class="text-primary">+70</h4>
+                        <p>Años de historia.</p>
+                    </div>
+                </div>
+                <div class="widget">
+                    <div class="icon-wrapper">
+                        <i class="ti-user"></i>
+                    </div>
+                    <div class="infos-wrapper">
+                        <h4 class="text-primary">20</h4>
+                        <p>Pilotos profesionales.</p>
+                    </div>
+                </div>
+            </div> -->
+         </div>
+    </div>
+</section>
+
+{% endblock %}

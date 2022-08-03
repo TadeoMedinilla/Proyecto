@@ -1,5 +1,7 @@
 from django import forms
 
+from WebF1.models import Ingeniero, Piloto
+
 # Create your models here.
 class TeamForm(forms.Form):
    
@@ -14,8 +16,8 @@ class TeamForm(forms.Form):
     piloto_principal= forms.CharField(max_length=20)
     piloto_secundario= forms.CharField(max_length=20)
     cantidad_de_empleados= forms.IntegerField()
-
-class EmpleadoForm(TeamForm):
+'''
+class EmpleadoForm():
 
     nombre=  forms.CharField(max_length=20)
     apellido= forms.CharField(max_length=20)
@@ -37,6 +39,26 @@ class IngenieroForm(EmpleadoForm):
     experiencia= forms.IntegerField()
     email= forms.EmailField()
 
+'''
+
+class PilotoForm(forms.ModelForm):
+    class Meta:
+        model = Piloto
+        fields= ['nombre', 'apellido', 'nacionalidad',
+                    'experiencia', 'edad', 'escuderia',
+                    'puesto', 'campeonatos_disputados',
+                    'campeonatos_ganados',
+                     'carreras_disputadas', 'carreras_ganadas',
+                     'poles', 'circuito_favorito','email']
+
+class IngenieroForm(forms.ModelForm):
+    class Meta:
+        model = Ingeniero
+        fields= ['nombre', 'apellido', 'nacionalidad',
+                    'experiencia', 'edad', 'escuderia',
+                    'puesto', 'universidad','titulo',
+                     'especialidad', 'ocupacion','email']
+
 class PeriodistaForm(forms.Form):
 
     nombre= forms.CharField(max_length=20)
@@ -50,4 +72,4 @@ class FanForm(forms.Form):
     nombre= forms.CharField(max_length=20)
     apellido= forms.CharField(max_length=20)
     email= forms.EmailField()
-    edad= forms.IntegerField()
+    edad= forms.IntegerField() 

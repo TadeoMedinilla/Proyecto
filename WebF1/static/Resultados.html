@@ -4,10 +4,29 @@
 <!-- Seccion con un API form -->
 
 <!-- Muestro info de escuderias -->
-<h5 class="section-title">Escuderias:</h5>
+<h4><a href="{% url 'MostrarEscuderias' %}" title="Click aqui para ver todas las Escuderias registradas.">Escuderias:</a></h4>
 {% if teams %}
-    {% for esc in teams %}
     
+    {% for esc in teams %}
+
+    <div class="col-sm-6 col-md-4">
+        <div class="widget">
+            <div class="icon-wrapper">
+                <i class="ti-cup"></i>
+            </div>
+            <div class="infos-wrapper">
+                <h3 class="text-primary"><a href="{% url 'DetalleEscuderia' esc.pk %}" title="Click para mas info">{{esc.escuderia}} <i class="ti-info-alt"></i></a></h3>
+                <p>{{esc.nacionalidad}}</p>
+                <!-- 
+                <div class="widget">
+                    &nbsp;<a class="nav-link btn btn-primary" href="{% url 'EliminarEscuderia' esc.pk %}"><i class="ti-trash"></i></a>&nbsp;
+                    &nbsp;<a class="nav-link btn btn-primary" href="{% url 'ModificarEscuderia' esc.pk %}"><i class="ti-marker-alt"></i></a>&nbsp;
+                    &nbsp;<a class="nav-link btn btn-primary" href="{% url 'DetalleEscuderia' esc.pk %}"><i class="ti-info-alt"></i></a>&nbsp;
+                </div>  -->                
+            </div>
+        </div>
+    </div>
+    <!--
         <p>Nombre: {{ esc.escuderia}}</p>
         <p>Nacionalidad: {{ esc.nacionalidad}}</p>
         <p>Patrocinador: {{  esc.patrocinador }}</p>
@@ -16,31 +35,15 @@
         <p>Piloto Principal: {{  esc.pil_ppal}}</p>
         <p>Piloto secundario: {{  esc.pil_sec}}</p>
         <p>Cantidad de empleados: {{ esc.cant_emp}}</p>
+    -->
 
     {% endfor %}
 {% else %}
     <p>No hay escuderias registradas con ese nombre</p>
 {% endif %}
 
-<!-- Muestro info de empleados -->
-<h4>Empleados:</h4>
-{% if empleados %}
-    {% for emp in empleados %}
-    
-        <p>Nombre: {{ emp.nombre }}</p>
-        <p>Apellido: {{ emp.apellido }}</p>
-        <p>Nacionalidad: {{ emp.nacionalidad }}</p>
-        <p>Edad: {{  emp.edad }} años</p>
-        <p>Escuderia: {{ emp.escuderia }}</p>
-        <p>Puesto: {{ emp.puesto }}</p>
-    
-    {% endfor %}
-{% else %}
-    <p>No hay empleados registrados con ese nombre</p>
-{% endif %}
-
 <!-- Muestro info de ingenieros -->
-<h4>Ingenieros:</h4>
+<h4><a href="{% url 'MostrarIngenieros' %}" title="Click aqui para ver todos los Ingenieros registrados.">Ingenieros:</a></h4>
 {% if ingenieros %}
 
     {% for ing in ingenieros %}
@@ -64,7 +67,7 @@
 
 
 <!-- Muestro info de pilotos -->
-<h4>Pilotos:</h4>
+<h4><a href="{% url 'MostrarPilotos' %}" title="Click aqui para ver todos los Pilotos registrados.">Pilotos</a></h4>
 {% if pilotos %}
 
     {% for pil in pilotos %}
@@ -87,7 +90,7 @@
 
 
 <!-- Muestro info de fans -->
-<h4>Fans:</h4>
+<h4><a href="{% url 'MostrarFans' %}" title="Click aqui para ver todos los Fans registrados.">Fans:</a></h4>
 {% if Fans %}
 
     {% for fan in Fans %}
@@ -102,7 +105,7 @@
 {% endif %}    
 
 <!-- Muestro info de periodistas -->
-<h4>Periodistas:</h4>
+<h4><a href="{% url 'MostrarPeriodistas' %}" title="Click aqui para ver todos los Periodistas registrados.">Periodistas:</a></h4>
 {% if periodistas %}
 
     {% for per in periodistas %}

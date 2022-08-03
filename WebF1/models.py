@@ -1,6 +1,7 @@
 from django.db import models
 
 # Create your models here.
+
 class Team(models.Model):
 
     Categoria= 'Formula 1'
@@ -18,28 +19,43 @@ class Team(models.Model):
     pil_ppal= models.CharField(max_length=15, default='')
     pil_sec= models.CharField(max_length=15, default='')
     cant_emp= models.IntegerField(default=0)
+    
+    def __str__(self):
+        return (f'Nombre: {self.escuderia}.\nNacionalidad: {self.nacionalidad}.')
 
-class Empleado(Team):
-#Me interesa heredar de Team: escuderia, categoria, deporte y temporada
+class Empleado(models.Model):
+#La hago abstracta para que no genere una tabla innecesaria 
+    
     nombre=  models.CharField(max_length=15, default='')
     apellido= models.CharField(max_length=15, default='')
+    nacionalidad= models.CharField(max_length=25, default = '')
+    experiencia= models.IntegerField(default=0)
     edad= models.IntegerField(default=0)  
+    escuderia= models.CharField(max_length=25, default='')
     puesto= models.CharField(max_length=15, default='')
+    email = models.EmailField()
+
+
+    def __str__(self):
+        return (f'Nombre: {self.nombre}.\nApellido: {self.apellido}.\nEscuderia: {self.escuderia}.\nPuesto: {self.puesto}.')
 
 class Piloto(Empleado):
-#Me interesa heredar: datos personales y escuderia
-    exp= models.IntegerField(default=0)
-    camp_disp= models.IntegerField(default=0)
-    camp_gan= models.IntegerField(default=0)
-    circuito = models.CharField(max_length=15)
+#Aqui agrego datos especificos de pilotos
+    
+    campeonatos_disputados= models.IntegerField(default=0)
+    campeonatos_ganados= models.IntegerField(default=0)
+    circuito_favorito = models.CharField(max_length=15)
+    poles = models.IntegerField(default=0)
+    carreras_disputadas= models.IntegerField(default=0)
+    carreras_ganadas= models.IntegerField(default = 0)
     
 class Ingeniero(Empleado):
-#Me interesa heredar: datos personales y escuderia
-    universidad= models.CharField(max_length=20)
-    titulo= models.CharField(max_length=20)
-    especialidad=  models.CharField(max_length=15)
-    exp= models.IntegerField(default=0)
-    email= models.EmailField()
+#Agrego datos especificos de Ingenieros
+    
+    universidad= models.CharField(max_length=20, default='')
+    titulo= models.CharField(max_length=20, default='')
+    especialidad=  models.CharField(max_length=15, default='')
+    ocupacion = models.CharField(max_length = 25, default='')
 
 class Periodista(models.Model):
 
