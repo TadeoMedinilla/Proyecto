@@ -2,7 +2,7 @@
 {% load static %}
 {% block ContenidoDinamico %}
 <!-- Seccion con un API form -->
-
+<section class="section" id="about">
 <!-- Muestro info de escuderias -->
 <h4><a href="{% url 'MostrarEscuderias' %}" title="Click aqui para ver todas las Escuderias registradas.">Escuderias:</a></h4>
 {% if teams %}
@@ -17,12 +17,7 @@
             <div class="infos-wrapper">
                 <h3 class="text-primary"><a href="{% url 'DetalleEscuderia' esc.pk %}" title="Click para mas info">{{esc.escuderia}} <i class="ti-info-alt"></i></a></h3>
                 <p>{{esc.nacionalidad}}</p>
-                <!-- 
-                <div class="widget">
-                    &nbsp;<a class="nav-link btn btn-primary" href="{% url 'EliminarEscuderia' esc.pk %}"><i class="ti-trash"></i></a>&nbsp;
-                    &nbsp;<a class="nav-link btn btn-primary" href="{% url 'ModificarEscuderia' esc.pk %}"><i class="ti-marker-alt"></i></a>&nbsp;
-                    &nbsp;<a class="nav-link btn btn-primary" href="{% url 'DetalleEscuderia' esc.pk %}"><i class="ti-info-alt"></i></a>&nbsp;
-                </div>  -->                
+                             
             </div>
         </div>
     </div>
@@ -36,7 +31,6 @@
         <p>Piloto secundario: {{  esc.pil_sec}}</p>
         <p>Cantidad de empleados: {{ esc.cant_emp}}</p>
     -->
-
     {% endfor %}
 {% else %}
     <p>No hay escuderias registradas con ese nombre</p>
@@ -48,6 +42,20 @@
 
     {% for ing in ingenieros %}
     
+    <div class="col-sm-6 col-md-4">
+        <div class="widget">
+            <div class="icon-wrapper">
+                <i class="ti-id-badge"></i>
+            </div>
+            <div class="infos-wrapper">
+                <h3 class="text-primary"><a href="{% url 'DetalleIngeniero' ing.pk %}" title="Click para mas info">{{ing.nombre}} {{ing.apellido}} <i class="ti-info-alt"></i></a></h3>
+                <p>{{ing.escuderia}}</p>
+                <p>{{ing.puesto}}</p>
+                             
+            </div>
+        </div>
+    </div>
+    <!--
         <p>Nombre: {{ ing.nombre}}</p>
         <p>Apellido: {{ ing.apellido}}</p>
         <p>Nacionalidad: {{ ing.nacionalidad}}</p>
@@ -58,7 +66,7 @@
         <p>Universidad: {{ ing.universidad}}</p>
         <p>Experiencia: {{ ing.exp}} años</p>
         <p>Email: {{ ing.email}}</p>
-
+    -->
     
     {% endfor %}
 {% else %}
@@ -72,7 +80,19 @@
 
     {% for pil in pilotos %}
     
-    <p>Nombre: {{ pil.nombre}}</p>
+    <div class="col-sm-6 col-md-4">
+        <div class="widget">
+            <div class="icon-wrapper">
+                <i class="ti-car"></i>
+            </div>
+            <div class="infos-wrapper">
+                <h3 class="text-primary"><a href="{% url 'DetallePiloto' pil.pk %}" title="Click para mas info">{{pil.nombre}} {{pil.apellido}} <i class="ti-info-alt"></i></a></h3>
+                <p>{{pil.escuderia}}</p>                        
+            </div>
+        </div>
+    </div>
+
+    <!--<p>Nombre: {{ pil.nombre}}</p>
     <p>Apellido: {{ pil.apellido}}</p>
     <p>Nacionalidad: {{ pil.nacionalidad}}</p>
     <p>Edad: {{ pil.edad}} años</p>
@@ -80,7 +100,7 @@
     <p>Experiencia: {{ pil.exp}} años</p>
     <p>Campeonatos disputados: {{ pil.camp_disp}}</p>
     <p>Campeonatos ganados: {{ pil.camp_gan}}</p>
-    <p>Circuito preferido: {{ pil.circuito}}</p>
+    <p>Circuito preferido: {{ pil.circuito}}</p>-->
 
     
     {% endfor %}
@@ -95,9 +115,21 @@
 
     {% for fan in Fans %}
     
-        <p>Nombre: {{ fan.nombre}}</p>
+    <div class="col-sm-6 col-md-4">
+        <div class="widget">
+            <div class="icon-wrapper">
+                <i class="ti-face-smile"></i>
+            </div>
+            <div class="infos-wrapper">
+                <h3 class="text-primary"><a href="{% url 'DetalleFan' fan.pk %}" title="Click para mas info">{{fan.nombre}} {{fan.apellido}} <i class="ti-info-alt"></i></a></h3>
+                                       
+            </div>
+        </div>
+    </div>
+
+        <!--<p>Nombre: {{ fan.nombre}}</p>
         <p>Apellido: {{ fan.apellido}}</p>
-        <p>Email: {{ fan.email}}</p>
+        <p>Email: {{ fan.email}}</p>-->
     
     {% endfor %}
 {% else %}
@@ -110,15 +142,28 @@
 
     {% for per in periodistas %}
     
-        <p>Nombre: {{ per.nombre}}</p>
+    <div class="col-sm-6 col-md-4">
+        <div class="widget">
+            <div class="icon-wrapper">
+                <i class="ti-write"></i>
+            </div>
+            <div class="infos-wrapper">
+                <h3 class="text-primary"><a href="{% url 'DetallePeriodista' per.pk %}" title="Click para mas info">{{per.nombre}} {{per.apellido}} <i class="ti-info-alt"></i></a></h3>
+                <p>{{per.medio}}</p>                      
+            </div>
+        </div>
+    </div>
+
+
+        <!--<p>Nombre: {{ per.nombre}}</p>
         <p>Apellido: {{ per.apellido}}</p>
         <p>Medio Informativo: {{ per.medio}}</p>
         <p>Matricula Profesional: {{ per.matricula}}</p>
-        <p>Email: {{ per.email}}</p>
+        <p>Email: {{ per.email}}</p>-->
     
     {% endfor %}
 {% else %}
     <p>No hay periodistas registrados con ese nombre</p>
 {% endif %}    
-
+</section>
 {% endblock %}

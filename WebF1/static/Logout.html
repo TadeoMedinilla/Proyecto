@@ -1,0 +1,24 @@
+{% extends "Padre.html" %}
+{% load static %}
+{% block ContenidoDinamico %}
+<!-- Seccion con info de Pilotos y API form -->
+
+
+<section class="section" id="about">
+
+    <div class="container">
+
+        <div class="row align-items-center mr-auto">
+            <div class="col-md-4">
+                <!-- <h6 class="xs-font mb-0">nobis dolorem sapiente evenie.</h6> -->
+                <h2 class="section-title">¡Hasta pronto!</h2>
+                <p><b>Sesión cerrada.</b></p>
+                <h6 class="xs-font mb-6"><a href="{% url 'Login' %}">Iniciar sesión nuevamente.</a></h6>
+
+               <!-- <a href="javascript:void(0)">Read more...</a> -->
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

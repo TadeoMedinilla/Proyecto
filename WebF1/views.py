@@ -1,13 +1,19 @@
+from pickle import FALSE, TRUE
 from django.shortcuts import render
 from django.template import loader
-from WebF1.forms import PilotoForm, TeamForm, IngenieroForm, PeriodistaForm, FanForm
-from WebF1.models import Ingeniero, Periodista, Piloto, Team, Fan
+from WebF1.forms import PilotoForm, PublicacionForm, TeamForm, IngenieroForm, PeriodistaForm, FanForm, UserRegisterForm, UserEditForm, AvatarForm
+from WebF1.models import Creador, Ingeniero, Periodista, Piloto, Publicaciones, Team, Fan, Avatar
 from django.http import HttpResponse
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic.detail import DetailView
 from django.urls import reverse_lazy
-
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from datetime import date
 
 
 
@@ -15,9 +21,17 @@ def Inicio(request):
 
     return render(request, 'Inicio.html' )
 
+def AboutUs(request):
+
+    tomas = Creador(nombre='Tomas', apellido='Ruiz', descripcion='tomas descripcion')
+    sergio = Creador(nombre='Sergio', apellido='Andrade', descripcion='sergio descripcion')
+    tadeo = Creador(nombre='Tadeo', apellido='Medinilla', descripcion='tadeo descripcion')
+    notificacion = 'Aquí conoceras mas sobre nosotros.'
+    modelo={'tomas': tomas, 'sergio':sergio,'tadeo':tadeo, 'notificacion':notificacion}
+
+    return render(request, 'AboutUs.html', modelo )
 
 #Funciones necesarias para la busqueda en la BD:
-
 def Busqueda(request):
     
     return render(request, 'Busqueda.html/')
@@ -37,6 +51,7 @@ def Buscar(request):
         fan = Fan.objects.filter(nombre = search)
         #Busco dentro del model periodista
         periodista = Periodista.objects.filter(nombre = search)
+        
 
         return render(request,'Resultados.html/', {"teams":team,
                                                     "ingenieros":ingeniero,
@@ -46,7 +61,102 @@ def Buscar(request):
     else:
         return render(request, 'Busqueda.html/', {"error": 'No hay datos'})
 
+#Inicio de sesion:
+def Login(request):
+    if request.method == 'POST':
+        MiForm = AuthenticationForm(request, data = request.POST)
 
+        if MiForm.is_valid():
+
+            usuario = MiForm.cleaned_data.get('username')
+            contrasena = MiForm.cleaned_data.get('password')
+
+            user = authenticate(username= usuario, password = contrasena)
+
+            if user is not None:
+                login(request, user)
+                return render(request, 'Inicio.html', {'Notificacion': f'Bienvenido {usuario}'})
+            
+            else: 
+                return render(request, 'Inicio.html', {'Notificacion': 'Error, datos incorrectos'})
+            
+        else:
+            return render(request, 'Inicio.html', {'Notificacion' : 'Error, formulario incorrecto'})
+    
+    MiForm = AuthenticationForm
+
+    return render(request, 'Login.html',  {'MiForm': MiForm})
+#Registrarse:
+def Register(request):
+    
+    if request.method == 'POST':
+
+        MiForm = UserRegisterForm(request.POST)
+
+        if MiForm.is_valid():
+
+            username = MiForm.cleaned_data['username']
+            MiForm.save()
+
+            return render(request, 'Inicio.html', {'Notificacion': 'Usuario creado'})
+    else:
+        MiForm = UserRegisterForm()
+    
+    return render(request, 'Register.html', {'MiForm': MiForm})
+
+def ModificarUsuario(request,pk):
+
+    u = User.objects.get(pk=pk)
+
+    if request.method == 'POST':
+        MiForm = UserEditForm(request.POST)
+        print(MiForm)
+        if MiForm.is_valid:
+
+            info = MiForm.cleaned_data
+
+            #u.user = info['username']
+            u.first_name = info['first_name']
+            u.last_name = info['last_name']
+            u.email = info['email']
+            u.password1 = info['password1']
+            #u.password2 = info['password2']
+
+            u.save()
+
+            return render(request, 'Inicio.html')
+    
+    else:
+        MiForm = UserEditForm(initial = {'username': u.username, 
+                                        'first_name': u.first_name,
+                                        'last_name':u.last_name,
+                                        'email':u.email
+                                        })
+
+    return render(request, 'ModificarUsuario.html', {'MiForm': MiForm })
+#Detail:
+class DetalleUsuario(DetailView):
+    
+    model = User
+    template_name = 'UserDetail.html'
+
+def AgregarAvatar(request):
+
+    if request.method == 'POST':
+        MiForm = AvatarForm(request.POST, request.FILES)
+        if MiForm.is_valid:
+            avatarViejo=Avatar.objects.get(user = request.user)
+            if(avatarViejo.imagen):
+                avatarViejo.delete()
+            u = User.objects.get(username=request.user)
+            avatar = Avatar(user=u, imagen=MiForm.cleaned_data['imagen'])
+            avatar.save()
+            return render(request, 'Inicio.html')
+    else:
+        MiForm = AvatarForm()
+    return render(request, 'AgregarAvatar.html', {'MiForm': MiForm, 'user': request.user})
+
+listo = TRUE
 #C.R.U.D. [Create, Read, Update, Delete] de Escuderias:
 #Create:
 def Escuderias(request):
@@ -71,16 +181,22 @@ def Escuderias(request):
                         pil_sec = info['piloto_secundario'],
                         cant_emp = info['cantidad_de_empleados'])
             escuderia.save()
-            return render(request, 'Inicio.html')
+            
+            notificacion='Te has inscripto como escuderia.\nVe a la seccion escuderias para ver tus datos'
+            modelo={'notificacion':notificacion}
+            
+            return render(request, 'Inicio.html',modelo)
     else:
         MiForm = TeamForm()
-        
-    return render(request, 'Escud.html', {'MiForm': MiForm})
+        notificacion='Aqui te podras inscribir como escuderia'
+    return render(request, 'Escud.html', {'MiForm': MiForm,'notificacion':notificacion})
 # Read:
 def LeerEscuderias(request):
 
     escuderias = Team.objects.all()
-    lista = {'escuderias': escuderias}
+    notificacion='Aqui se listan todas las escuderias'
+    lista = {'escuderias': escuderias,'notificacion':notificacion}
+
     return render(request, 'MostrarEscuderias.html/', lista )
 # Update:
 def ModificarEscuderia(request, pk):
@@ -109,7 +225,9 @@ def ModificarEscuderia(request, pk):
             escuderia.save()
             
             escuderias = Team.objects.all()
-            lista = {'escuderias':escuderias}
+            notificacion='Modificacion guardada.'
+            lista = {'escuderias':escuderias, 'notificacion':notificacion}
+            
             
             return render(request, 'MostrarEscuderias.html/', lista)
     else:
@@ -124,8 +242,10 @@ def ModificarEscuderia(request, pk):
                          'piloto_principal':escuderia.pil_ppal,
                          'piloto_secundario':escuderia.pil_sec,
                          'empleados':escuderia.cant_emp})
+        notificacion='Aqui podras modificar tus datos de escuderia.'
+        
     
-    return render(request,'ModificarEscuderia.html/', {'MiForm': MiForm, 'escuderia': pk} )
+    return render(request,'ModificarEscuderia.html/', {'MiForm': MiForm, 'escuderia': pk, 'notificacion':notificacion} )
 # Delete:
 def EliminarEscuderia(request, pk):
     
@@ -133,7 +253,8 @@ def EliminarEscuderia(request, pk):
     team.delete()
 
     escuderias = Team.objects.all()
-    lista = {'escuderias':escuderias}
+    notificacion='Escuderia eliminada.'
+    lista = {'escuderias':escuderias,'notificacion':notificacion}
 
     return render(request,'MostrarEscuderias.html/', lista )
 
@@ -143,6 +264,7 @@ class DetalleEscuderia(DetailView):
     model = Team
     template_name = 'EscuderiaDetail.html'
 
+listo = TRUE
 #C.R.U.D. [Create, Read, Update, Delete] de Pilotos:
 #Create:
 def Pilotos(request):
@@ -172,19 +294,24 @@ def Pilotos(request):
                         email=info['email'])
                         
             piloto.save()
-            return render(request, 'Inicio.html')
+
+            notificacion='Te has inscripto como piloto.\nVe a la seccion pilotos para ver tus datos'
+            modelo={'notificacion':notificacion}
+
+            return render(request, 'Inicio.html', modelo)
     else:
         MiForm = PilotoForm()
-        
-    return render(request, 'Piloto.html', {'MiForm': MiForm})
+        notificacion='Aqui te podras inscribir como escuderia'
+    return render(request, 'Piloto.html', {'MiForm': MiForm,'notificacion':notificacion })
 # Read:
 def LeerPilotos(request):
     
     pilotos = Piloto.objects.all()
-    lista = {'pilotos': pilotos}
+    notificacion='Aqui se listan todos los pilotos'
+    lista = {'pilotos': pilotos, 'notificacion':notificacion}
 
     return render(request, 'MostrarPilotos.html/', lista)
-#Update
+#Update:
 def ModificarPiloto(request, pk):
 
     piloto = Piloto.objects.get(pk = pk)
@@ -215,7 +342,8 @@ def ModificarPiloto(request, pk):
             piloto.save()
            
             pilotos = Piloto.objects.all()
-            lista = {'pilotos':pilotos}
+            notificacion='Modificacion guardada.'
+            lista = {'pilotos':pilotos, 'notificacion':notificacion}
             
             return render(request, 'MostrarPilotos.html/', lista)
             
@@ -234,16 +362,17 @@ def ModificarPiloto(request, pk):
                                      'poles':piloto.poles,
                                      'circuito_favorito':piloto.circuito_favorito,
                                      'email':piloto.email,})
-    
-    return render(request,'ModificarPiloto.html/', {'MiForm': MiForm, 'piloto': pk} )
-#Delete
+        notificacion='Aqui podras modificar tus datos de piloto.'
+    return render(request,'ModificarPiloto.html/', {'MiForm': MiForm, 'piloto': pk, 'notificacion':notificacion} )
+#Delete:
 def EliminarPiloto(request, pk):
        
     piloto = Piloto.objects.get(pk = pk)
     piloto.delete()
 
     pilotos = Piloto.objects.all()
-    lista = {'pilotos':pilotos}
+    notificacion='Piloto eliminado.'
+    lista = {'pilotos':pilotos,'notificacion':notificacion}
 
     return render(request,'MostrarPilotos.html/', lista )
 
@@ -253,6 +382,8 @@ class DetallePiloto(DetailView):
     model = Piloto
     template_name = 'PilotoDetail.html'
 
+
+listo = TRUE
 #C.R.U.D. [Create, Read, Update, Delete] de Ingenieros:
 #Create:
 def Ingenieros(request):
@@ -279,16 +410,21 @@ def Ingenieros(request):
                         email = info['email'])
 
             ingeniero.save()
-            return render(request, 'Inicio.html')
+
+            notificacion='Te has inscripto como ingeniero.\nVe a la seccion ingenieros para ver tus datos'
+            modelo={'notificacion':notificacion}
+
+            return render(request, 'Inicio.html', modelo)
     else:
         MiForm = IngenieroForm()
-        
-    return render(request, 'Ingenieros.html', {'MiForm': MiForm})
+        notificacion='Aqui te podras inscribir como ingeniero'
+    return render(request, 'Ingenieros.html', {'MiForm': MiForm,'notificacion':notificacion})
 #Read:
 def LeerIngenieros(request):
 
     ingenieros = Ingeniero.objects.all()
-    lista = {'ingenieros':ingenieros}
+    notificacion='Aqui se listan todos los ingenieros'
+    lista = {'ingenieros':ingenieros,'notificacion':notificacion}
     
     return render(request, 'MostrarIngenieros.html/', lista)
 #Update:
@@ -320,9 +456,9 @@ def ModificarIngeniero(request, pk):
             ingeniero.email=info['email']
 
             ingeniero.save()
-           
+            notificacion='Modificacion guardada.'
             ingenieros = Ingeniero.objects.all()
-            lista = {'ingenieros':ingenieros}
+            lista = {'ingenieros':ingenieros, 'notificacion':notificacion}
             
             return render(request, 'MostrarIngenieros.html/', lista)
             
@@ -339,8 +475,8 @@ def ModificarIngeniero(request, pk):
                                      'especialidad':ingeniero.especialidad,
                                      'ocupacion':ingeniero.ocupacion,
                                      'email':ingeniero.email,})
-    
-    return render(request,'ModificarIngeniero.html/', {'MiForm': MiForm, 'ingeniero': pk} )
+        notificacion='Aqui podras modificar tus datos de ingeniero.'
+    return render(request,'ModificarIngeniero.html/', {'MiForm': MiForm, 'ingeniero': pk,'notificacion':notificacion } )
 #Delete:
 def EliminarIngeniero(request, pk):
     #NOTA: Trabajo con el pk y no con el nombre registrado por que si hay dos objetos con el mismo nombre
@@ -350,7 +486,8 @@ def EliminarIngeniero(request, pk):
     ingeniero.delete()
 
     ingenieros = Ingeniero.objects.all()
-    lista = {'ingenieros':ingenieros}
+    notificacion='Ingeniero eliminado.'
+    lista = {'ingenieros':ingenieros,'notificacion':notificacion }
 
     return  render(request, 'MostrarIngenieros.html/', lista)
 
@@ -360,6 +497,8 @@ class DetalleIngeniero(DetailView):
     model = Ingeniero
     template_name = 'IngenieroDetail.html'
 
+
+listo = TRUE
 #C.R.U.D. [Create, Read, Update, Delete] de Fans:
 #Create:
 class Fans(CreateView):
@@ -393,6 +532,8 @@ class DetalleFan(DetailView):
     model = Fan
     template_name = 'FanDetail.html'
 
+
+listo = TRUE
 #C.R.U.D. [Create, Read, Update, Delete] de Fans:
 #Create:
 class Periodistas(CreateView):
@@ -425,3 +566,48 @@ class DetallePeriodista(DetailView):
     
     model = Periodista
     template_name = 'PeriodistaDetail.html'
+
+
+listo = TRUE
+#CRUD Publicaciones:
+#Create:
+def Publicacion(request):
+    if request.method == 'POST':
+
+        MiForm = PublicacionForm(request.POST)
+        print(MiForm)
+
+        if MiForm.is_valid:
+
+            info = MiForm.cleaned_data
+            publicacion = Publicaciones( autor = info['autor'], titulo = info['titulo'], cuerpo = info['cuerpo'], fecha = date.today() )
+            
+            publicacion.save()
+
+            notificacion = 'Tu publicacion ha sido realizada. Ve a publicaciones para verla.'
+            lista={'notificacion': notificacion}
+            
+            return render(request, 'Inicio.html', lista)
+    else:
+        MiForm = PublicacionForm()
+    
+    return render (request, 'Publicacion.html', {'MiForm': MiForm})                            
+#Read:
+def MostrarPublicaciones(request):
+
+    publicaciones = Publicaciones.objects.all()
+    lista = {'pubs':publicaciones}
+    
+    return render(request, 'MostrarPublicaciones.html/', lista)
+#Delete:
+class EliminarPublicacion(DeleteView):
+
+    model = Publicaciones
+    template_name = 'EliminarPublicacion_confirm.html'
+    success_url = reverse_lazy( 'MostrarPublicaciones')
+#Detail [No es parte del CRUD lo utilizo para mostrar info detallada de un objeto en especifico]:
+class DetallePublicacion(DetailView):
+       
+    model = Publicaciones
+    template_name = 'PublicacionDetail.html'
+

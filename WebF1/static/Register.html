@@ -1,0 +1,71 @@
+{% extends "Padre.html" %}
+{% load static %}
+{% block ContenidoDinamico %}
+<!-- Seccion con info sobre ing. y un API form -->
+
+
+<section class="section" id="about">
+
+    <div class="container">
+
+        <div class="row align-items-center mr-auto">
+            <div class="col-md-4">
+                <h5 class="xs-font mb-0">Para obtener la ultimas noticias de la F1.</h5> 
+                <h1 class="section-title">Registrate:</h1>
+                <!--<p>Para obtener la ultimas noticias y estar siempre informado sobre la F1.</p>-->
+                <h6 class="xs-font mb-6">Si ya sos miembro,<a href="{% url 'Login' %}">Inicia sesion.</a></h6>
+
+               <!-- <a href="javascript:void(0)">Read more...</a> -->
+            </div>
+            
+            <div class="col-sm-6 col-md-4">
+                <div class="widget">
+                    <div class="icon-wrapper">
+                        <i class="ti-user"></i>
+                    </div>
+                    <div class="infos-wrapper">
+                        <div class="widget">
+                            
+                            <form action="" method="POST">
+                                {% csrf_token %}
+                                    <table>
+            
+                                     {{MiForm.as_table}}
+
+                                    </table>
+                                    <input type="submit", value="Registrarse">
+                            </form>
+                        </div>                  
+                    </div>
+                </div>
+            </div>
+            
+            <!--
+            <div class="col-sm-6 col-md-4">
+                <div class="widget">
+                    <div class="icon-wrapper">
+                        <i class="ti-star"></i>
+                    </div>
+                    <div class="infos-wrapper">
+                        <h4 class="text-primary">+70</h4>
+                        <p>Años de historia.</p>
+                    </div>
+                </div>
+                <div class="widget">
+                    <div class="icon-wrapper">
+                        <i class="ti-user"></i>
+                    </div>
+                    <div class="infos-wrapper">
+                        <h4 class="text-primary">20</h4>
+                        <p>Pilotos profesionales.</p>
+                    </div>
+                </div>
+            </div> -->
+         </div>
+    </div>
+</section>
+
+
+
+
+{% endblock %}

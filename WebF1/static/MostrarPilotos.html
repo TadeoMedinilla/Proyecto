@@ -17,11 +17,12 @@
 
                <!-- <a href="javascript:void(0)">Read more...</a> -->
             </div>
+            {% if pilotos %}
             {% for x in pilotos %}
             <div class="col-sm-6 col-md-4">
                 <div class="widget">
                     <div class="icon-wrapper">
-                        <i class="ti-cup"></i>
+                        <i class="ti-car"></i>
                     </div>
                     <div class="infos-wrapper">
                         <h4 class="text-primary">{{x.nombre}} {{x.apellido}}</h4>
@@ -33,38 +34,22 @@
                         </div>                   
                     </div>
                 </div>
-                <!-- <div class="widget">
-                    <div class="icon-wrapper">
-                        <i class="ti-money"></i>
-                    </div>
-                    <div class="infos-wrapper">
-                        <h4 class="text-primary">10</h4>
-                        <p>Escuderias de alto nivel</p>
-                    </div>
-                </div> -->
+                
             </div>
             {% endfor %}
-            <!--
+            {% else %}
             <div class="col-sm-6 col-md-4">
                 <div class="widget">
                     <div class="icon-wrapper">
-                        <i class="ti-star"></i>
+                        <i class="ti-car"></i>
                     </div>
                     <div class="infos-wrapper">
-                        <h4 class="text-primary">+70</h4>
-                        <p>Años de historia.</p>
+                        <!-- <h3 class="text-primary">{{e.escuderia}}</h3> -->
+                        <p>Aun no hay pilotos registrados.</p> 
                     </div>
                 </div>
-                <div class="widget">
-                    <div class="icon-wrapper">
-                        <i class="ti-user"></i>
-                    </div>
-                    <div class="infos-wrapper">
-                        <h4 class="text-primary">20</h4>
-                        <p>Pilotos profesionales.</p>
-                    </div>
-                </div>
-            </div> -->
+            </div>
+            {% endif %}
          </div>
     </div>
 </section>

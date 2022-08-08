@@ -1,6 +1,10 @@
+from dataclasses import fields
+from tkinter.ttk import Style
 from django import forms
 
-from WebF1.models import Ingeniero, Piloto
+from WebF1.models import Ingeniero, Piloto, Publicaciones
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 
 # Create your models here.
 class TeamForm(forms.Form):
@@ -73,3 +77,46 @@ class FanForm(forms.Form):
     apellido= forms.CharField(max_length=20)
     email= forms.EmailField()
     edad= forms.IntegerField() 
+
+class UserRegisterForm( UserCreationForm):
+    
+    username = forms.CharField(label= 'Usuario')
+    email = forms.EmailField()
+    password1= forms.CharField(label= 'Contraseña', widget = forms.PasswordInput)
+    password2= forms.CharField(label= 'Repetir contraseña', widget = forms.PasswordInput)
+    
+    first_name= forms.CharField(label='Nombre')
+    last_name= forms.CharField(label='Apellido')
+    
+    class Meta:
+        model = User
+        fields = ['username','first_name', 'last_name', 'email', 'password1', 'password2' ]
+
+        help_texts= {k: '' for k in fields}
+    
+class UserEditForm(UserCreationForm):
+
+    
+    username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}), label= 'Modificar username')
+    email= forms.EmailField(label='Modificar e-mail')
+    password1= forms.CharField(label= 'Modificar contraseña', widget = forms.PasswordInput)
+    password2= forms.CharField(label= 'Repetir contraseña', widget = forms.PasswordInput)
+
+    first_name= forms.CharField(label='Modificar nombre')
+    last_name= forms.CharField(label='Modificar apellido')
+
+    class Meta:
+        model =User
+        fields =  fields = ['username', 'first_name', 'last_name', 'email', 'password1', 'password2']
+        help_texts = {k:'' for k in fields}
+
+class AvatarForm(forms.Form):
+    imagen = forms.ImageField(label='Imagen')
+
+class PublicacionForm(forms.ModelForm):
+    class Meta:
+        model = Publicaciones
+        fields=['titulo', 'autor', 'cuerpo', 'fecha']
+    
+
+    

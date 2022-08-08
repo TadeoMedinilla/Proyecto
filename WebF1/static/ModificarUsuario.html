@@ -1,0 +1,102 @@
+{% extends "Padre.html" %}
+{% load static %}
+{% block ContenidoDinamico %}
+<!-- Seccion con info de escuderias y API form -->
+
+<section id="contact" class="section pb-0">
+
+    <div class="container">
+        <h6 class="xs-font mb-0">Aqui podras modificar los datos de tu usuario.</h6>
+        <h3 class="section-title mb-5">Modificar usuario:</h3>
+
+        <div class="row align-items-center justify-content-between">
+            <div class="col-md-8 col-lg-7">
+
+                <form class="contact-form" method="post">
+                    {% csrf_token %}
+                    <div class="col">
+                        <h6 class="xs-font mb-0">Username:</h6>
+                        <div class="col form-group">
+                            <input  class="form-control" placeholder="Autor" name="{{ MiForm.username.name}}" value="{{ user.username }}" readonly>
+                        </div>
+                        <h6 class="xs-font mb-0">Nombre:</h6>
+                        <div class="col form-group">
+                            <input type="text" class="form-control" placeholder="Autor" name="{{ MiForm.first_name.name}}" value="{{ user.first_name }}">
+                        </div>
+                        <h6 class="xs-font mb-0">Apellido:</h6>
+                        <div class="col form-group">
+                            <input type="text" class="form-control" placeholder="Autor" name="{{ MiForm.last_name.name}}" value="{{ user.last_name }}">
+                        </div>
+                        <h6 class="xs-font mb-0">Email:</h6>
+                        <div class="col form-group">
+                            <input type="email" class="form-control" placeholder="Autor" name="{{ MiForm.email.name}}" value="{{ user.email }}">
+                        </div>
+                        <h6 class="xs-font mb-0">Contraseña:</h6>
+                        <div class="col form-group">
+                            <input type="password" class="form-control" placeholder="Autor" name="{{ MiForm.password1.name}}" >
+                        </div>
+                        <h6 class="xs-font mb-0">Confirmar contraseña:</h6>
+                        <div class="col form-group">
+                            <input  class="form-control" placeholder="Autor" name="{{ MiForm.password2.name}}" >
+                        </div>
+                        
+                    </div>
+                    
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-primary btn-block" value="Guardar cambios">
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <footer class="footer mt-5 border-top">
+            <div class="row align-items-center justify-content-center">
+                <div class="col-md-6 text-center text-md-left">
+                    <p class="mb-0"><script>document.write(new Date().getFullYear())</script> &copy;</p>
+                </div>
+                <div class="col-md-6 text-center text-md-right">
+                    <div class="social-links">
+                        <a href="javascript:void(0)" class="link"><i class="ti-facebook"></i></a>
+                        <a href="javascript:void(0)" class="link"><i class="ti-twitter-alt"></i></a>
+                        <a href="javascript:void(0)" class="link"><i class="ti-google"></i></a>
+                        <a href="javascript:void(0)" class="link"><i class="ti-pinterest-alt"></i></a>
+                        <a href="javascript:void(0)" class="link"><i class="ti-instagram"></i></a>
+                        <a href="javascript:void(0)" class="link"><i class="ti-rss"></i></a>
+                    </div>
+                </div>
+            </div> 
+        </footer>
+    </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
+{% if MiForm.errors %}
+<p>Estan mal los datos</p>
+{% endif %}
+
+<form action="" method="post">
+    {% csrf_token %}
+        <table>
+            
+            {{MiForm.as_table}}
+
+        </table>
+    <input type="submit", value="Enviar">
+</form> -->
+
+
+{% endblock %}

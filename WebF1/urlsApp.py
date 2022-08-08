@@ -1,10 +1,13 @@
 from ast import Name
 import py_compile
+from re import template
 from django.urls import path
 from WebF1 import views
 
-from .views import Inicio, Busqueda, Buscar
-
+from .views import AboutUs, AgregarAvatar, DetalleUsuario, Inicio, Busqueda, Buscar, Login, ModificarUsuario, MostrarPublicaciones, Publicacion, Register
+from django.contrib.auth.views import LogoutView
+#Importo CRUD Publicaciones 
+from .views import Publicacion, MostrarPublicaciones, EliminarPublicacion, DetallePublicacion
 #Importo CRUD Escuderias
 from .views import Escuderias, LeerEscuderias, ModificarEscuderia, EliminarEscuderia, DetalleEscuderia
 #Importo CRUD Pilotos
@@ -20,9 +23,24 @@ from .views import Periodistas, MostrarPeriodistas, ModificarPeriodista, Elimina
 urlpatterns = [
 
     path('', Inicio, name= 'Inicio'),
+    path('AboutUs/', AboutUs, name= 'AboutUs'),
 
     path("Busqueda/", Busqueda, name= 'Busqueda'),
-    path('Busqueda/Buscar/', Buscar, name= 'Buscar'),
+    path('Buscar/', Buscar, name= 'Buscar'),
+    
+    #Urls CRUD Publicaciones:
+    path('Publicaciones/', Publicacion, name= 'Publicaciones'),
+    path('MostrarPublicaciones/', MostrarPublicaciones, name='MostrarPublicaciones'),
+    path('EliminarPublicacion/<pk>', EliminarPublicacion.as_view(), name='EliminarPublicacion'),
+    path('DetallePublicacion/<pk>', DetallePublicacion.as_view(), name='DetallePublicacion'),
+
+    #Urls CRUD Login:
+    path('Login/', Login, name= 'Login'),
+    path('Register/', Register, name= 'Register'),
+    path('Logout/', LogoutView.as_view(template_name = 'Logout.html'), name='Logout'),
+    path('ModificarUsuario/<pk>', ModificarUsuario, name= 'ModificarUsuario'),
+    path('DetalleUsuario/<pk>', DetalleUsuario.as_view() , name= 'DetalleUsuario'),
+    path('AgregarAvatar/', AgregarAvatar, name= 'AgregarAvatar'),
 
     #Urls CRUD Escuderias:
     path('Escuderias/', Escuderias, name= 'Escuderias'),

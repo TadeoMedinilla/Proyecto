@@ -1,0 +1,80 @@
+{% extends "Padre.html" %}
+{% load static %}
+{% block ContenidoDinamico %}
+<!-- Seccion con info de Pilotos y API form -->
+
+<section id="contact" class="section pb-0">
+
+    <div class="container">
+        <h6 class="xs-font mb-0">Inicia un nuevo chat aqui.</h6>
+        <h3 class="section-title mb-5">Nueva Mensaje:</h3>
+
+        <div class="row align-items-center justify-content-between">
+            <div class="col-md-8 col-lg-7">
+
+                <form class="contact-form" method="post">
+                    {% csrf_token %}
+                    <div class="form-row">
+                        
+                        <div class="col form-group">
+                            <input type="text" class="form-control" placeholder="Autor" name="{{ MiForm.autor.name }}" value="{{ user.username }}" readonly>
+                            <input type="hidden" class="form-control" placeholder="Autor" name="{{ MiForm.autor.name }}" value="{{ user.username }}">
+                        </div>
+                        
+                        <div class="input-group input-group-sm col form-group">
+                                <div class="input-group-prepend">
+                                  <span class="input-group-text" id="inputGroup-sizing-sm">Destinatario</span>
+                                </div>
+                                <!-- <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm"> -->
+                                <select id="{{ u.username }}" name="{{ MiForm.destinatario.name }}">
+                                    {% for u in users %}
+                                        <option class="dropdown-item" value="{{ u.username }}">{{u.username}}</option>
+                                    {% endfor %}
+                                </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input   cols="30" rows="5" class="form-control ckeditor" placeholder="Empieza a escribir aqui..." name="{{MiForm.cuerpo.name}}" >
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-primary btn-block" value="Enviar">
+                    </div>
+                </form>
+            </div>
+            <!--<div class="col-md-4 d-none d-md-block order-1">
+                <ul class="list">
+                    <li class="list-head">
+                        <h6>INFORMACION DE CONTACTO</h6>
+                    </li>
+                    <li class="list-body">
+                        <p class="py-2">Contact us and we'll get back to you within 24 hours.</p>
+                        <p class="py-2"><i class="ti-location-pin"></i> 12345 Fake ST NoWhere AB Country</p>
+                        <p class="py-2"><i class="ti-email"></i>  F1@website.com</p>
+                        <p class="py-2"><i class="ti-microphone"></i> (123) 456-7890</p>
+
+                    </li>
+                </ul> 
+            </div>-->
+        </div>
+
+        <footer class="footer mt-5 border-top">
+            <div class="row align-items-center justify-content-center">
+                <div class="col-md-6 text-center text-md-left">
+                    <p class="mb-0">Copyright <script>document.write(new Date().getFullYear())</script> &copy; <a target="_blank" href="http://www.devcrud.com">DevCRUD</a></p>
+                </div>
+                <div class="col-md-6 text-center text-md-right">
+                    <div class="social-links">
+                        <a href="javascript:void(0)" class="link"><i class="ti-facebook"></i></a>
+                        <a href="javascript:void(0)" class="link"><i class="ti-twitter-alt"></i></a>
+                        <a href="javascript:void(0)" class="link"><i class="ti-google"></i></a>
+                        <a href="javascript:void(0)" class="link"><i class="ti-pinterest-alt"></i></a>
+                        <a href="javascript:void(0)" class="link"><i class="ti-instagram"></i></a>
+                        <a href="javascript:void(0)" class="link"><i class="ti-rss"></i></a>
+                    </div>
+                </div>
+            </div> 
+        </footer>
+    </div>
+</section>
+
+{% endblock %}

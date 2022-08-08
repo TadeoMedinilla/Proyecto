@@ -1,6 +1,12 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 # Create your models here.
+
+class Creador(models.Model):
+
+    nombre = models.CharField(max_length=50, default='')
+    apellido=models.CharField(max_length=50, default='')
+    descripcion = models.CharField(max_length=500, default='')
 
 class Team(models.Model):
 
@@ -71,3 +77,21 @@ class Fan(models.Model):
     apellido=models.CharField(max_length=20, default='')
     email= models.EmailField(default=None)
     edad= models.IntegerField(default=0)
+
+class Avatar(models.Model):
+    
+    user= models.ForeignKey(User, on_delete= models.CASCADE)
+    imagen=models.ImageField(upload_to='avatar/', null=True, blank=True)
+
+class Publicaciones(models.Model):
+
+    titulo = models.CharField(max_length= 50, default='')
+    autor = models.CharField(max_length=25, default='')
+    cuerpo = models.CharField(max_length=500, default='')
+    fecha = models.DateField()
+
+    def __str__(self):
+        return (f'Titulo: {self.titulo}.\nAutor: {self.autor}.\nFecha: {self.fecha}')
+    
+
+

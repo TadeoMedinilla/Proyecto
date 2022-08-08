@@ -28,7 +28,7 @@
                             <p> {{ error }}</p>
                         {% endif %}
                         
-                        <form action="Buscar" method="GET">
+                        <form action="{% url 'Buscar' %}" method="get">
 
                             <input type="text", name= "buscar", id="busqueda1">
                         

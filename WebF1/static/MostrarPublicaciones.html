@@ -1,0 +1,49 @@
+{% extends "Padre.html" %}
+{% load static %}
+{% block ContenidoDinamico %}
+<!-- Seccion con info de Pilotos y API form -->
+
+
+<section class="section" id="about">
+
+    <div class="container">
+
+        <div class="row align-items-center mr-auto">
+            <div class="col-md-4">
+                
+                <h3 class="section-title">Publicaciones</h3>
+                    {% if pubs %}
+                        <p>Aqui se enlistan todas las publicaciones realizadas:</p>
+                        <h6 class="xs-font mb-6"><a href="{% url 'Publicaciones' %}">Realizar nueva publicacion</a></h6>
+                        {% for p in object_list %}
+                
+                        {% endfor %}
+                    {% else %}
+                        <p>Aun no se han realizado publicaciones. <br>Regrese pronto.</p>
+                        <h6 class="xs-font mb-6"><a href="{% url 'Publicaciones' %}">Realizar nueva publicacion</a></h6>
+                    {% endif %}
+              
+            </div>
+            {% for p in pubs %}
+            <div class="col-sm-6 col-md-4">
+                <div class="widget">
+                    <div class="icon-wrapper">
+                        <i class="ti-align-left"></i>
+                    </div>
+                    <div class="infos-wrapper">
+                        <h3 class="text-primary">{{p.titulo}}</h3>
+                        <p>{{p.autor}} - {{p.fecha}}</p>
+                        <a  href="{% url 'DetallePublicacion' p.pk %}">&nbsp;Leer mas...&nbsp;</a><br>
+                        <a  href="{% url 'EliminarPublicacion' p.pk %}">&nbsp;Eliminar&nbsp;</a>
+                        
+                              
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            
+         </div>
+    </div>
+</section>
+
+{% endblock %}

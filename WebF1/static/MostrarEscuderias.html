@@ -17,6 +17,7 @@
 
                <!-- <a href="javascript:void(0)">Read more...</a> -->
             </div>
+            {% if escuderias %}
             {% for e in escuderias %}
             <div class="col-sm-6 col-md-4">
                 <div class="widget">
@@ -26,36 +27,33 @@
                     <div class="infos-wrapper">
                         <h3 class="text-primary">{{e.escuderia}}</h3>
                         <p>{{e.nacionalidad}}</p>
+                        <a  href="{% url 'MostrarPublicaciones' %}">Publicaciones</a>
                         <div class="widget">
                             &nbsp;<a class="nav-link btn btn-primary" href="{% url 'EliminarEscuderia' e.pk %}"><i class="ti-trash"></i></a>&nbsp;
                             &nbsp;<a class="nav-link btn btn-primary" href="{% url 'ModificarEscuderia' e.pk %}"><i class="ti-marker-alt"></i></a>&nbsp;
                             &nbsp;<a class="nav-link btn btn-primary" href="{% url 'DetalleEscuderia' e.pk %}"><i class="ti-info-alt"></i></a>&nbsp;
-                        </div>                  
+                        </div>      
+                                  
+                                    
                     </div>
                 </div>
             </div>
             {% endfor %}
-            <!--
+            {% else %}
             <div class="col-sm-6 col-md-4">
                 <div class="widget">
                     <div class="icon-wrapper">
-                        <i class="ti-star"></i>
+                        <i class="ti-cup"></i>
                     </div>
                     <div class="infos-wrapper">
-                        <h4 class="text-primary">+70</h4>
-                        <p>Años de historia.</p>
+                        <!-- <h3 class="text-primary">{{e.escuderia}}</h3> -->
+                        <p>Aun no hay escuderias registradas.</p> 
                     </div>
                 </div>
-                <div class="widget">
-                    <div class="icon-wrapper">
-                        <i class="ti-user"></i>
-                    </div>
-                    <div class="infos-wrapper">
-                        <h4 class="text-primary">20</h4>
-                        <p>Pilotos profesionales.</p>
-                    </div>
-                </div>
-            </div> -->
+            </div>
+
+            {% endif %}
+            
          </div>
     </div>
 </section>

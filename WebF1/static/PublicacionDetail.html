@@ -1,0 +1,24 @@
+{% extends "Padre.html" %}
+{% load static %}
+{% block ContenidoDinamico %}
+<!-- Seccion con info sobre ing. y un API form -->
+
+<section class="section" id="about">
+
+    <div class="container block">
+
+        <div class="row align-items-center block">
+            <div class="col-md-4 block">
+                <!-- <h6 class="xs-font mb-0">nobis dolorem sapiente evenie.</h6> -->
+                <h4 class="section-title">{{ publicaciones.titulo }}</h4>
+                <p>Autor: {{publicaciones.autor}} - Fecha de publicacion: {{ publicaciones.fecha }}</p><br>
+                <p>{{ publicaciones.cuerpo }}</p>
+               <!-- <a href="javascript:void(0)">Read more...</a> -->
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+{% endblock %}
