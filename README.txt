@@ -1,12 +1,13 @@
-ENTREGA INTERMEDIA DEL PROYECTO FINAL
+ENTREGA DEL PROYECTO FINAL
 Plataforma: Coderhouse
 Grupo conformado por:
 - Sergio Andrade
 - Tomas Ruiz
 - Tadeo Medinilla
 
-Tema: En el proyecto desarrollamos una pagina web sobre la F1 donde los usuarios pogran registrarse y acceder a informacion
-segun la clase a la que pertenezcan.
+Tema: En el proyecto desarrollamos una pagina web sobre la F1 donde los usuarios pogran registrarse, mandar mensajes a
+otros usuarios, leer y crear publicaciones. A su vez entidades como escuderias, ingenieros, pilotos, periodistas y Fans
+podran inscribirse en una base de datos donde sus datos quedaran guardados y podran ser mostrados, modificados y eliminados.
 
 En el siguiente documento se detalla:
 
@@ -30,43 +31,46 @@ Al realizar esto el terminal le proporcionara un link que lo redirigira al sitio
 se encontrara con una pagina de inicio, con una barra de navegacion en la parte superior, si hace click en cualquiera
 de los botones de esta barra lo redirigira a la seccion que corresponda, sea dentro de la pagina o en un link anexado.
 
-A continuacion detallaremos lo que se encuentra en cada carpeta, lo que hay en cada archivo para que sirve, por que fue 
+A continuacion detallaremos lo que se encuentra en cada carpeta, lo que hay en cada archivo, para que sirve, por que fue 
 desarrollado y como probarlo.
 
-Dentro de la carpeta que usted creo se encuentran dos carpetas mas: 
+Dentro de la carpeta que usted creo se encuentran tres carpetas mas: 
 1) Entrega1_Medinilla (Proyecto)
 2) WebF1 (Aplicacion)
+3) Mensajeria (Aplicacion)
 
 Dentro de la primera carpeta (Entrega1_Medinilla) se creo el proyecto de esta carpeta los dos archivos que nos importan son 
 urls.py y settings.py. En el archivo urls.py al abrirlo se encontrara con un diccionario "urlpatterns", donde se encuentran
-la direccion que lo redirige al sitio de administracion de usuarios de django y un url con argunmento vacio ('') que vincula todos 
-los urls utilizados en la aplicacion 'WebF1' con el proyecto actual. El hecho de que este vacio nos permite que usted con 
-solo hacer click ingrese a los urls de la aplicacion. 
-Si desea ingresar al administrador de Django en el link provisto por el terminal escriba '/admin/'.
+la direccion que lo redirige al sitio de administracion de usuarios de django, un segundo url con argunmento vacio ('') que vincula 
+todos los urls utilizados en la aplicacion 'WebF1' con el proyecto actual, y un tercer url con argumento vacio tambien ('') que 
+vincula los urls utilizados en la aplicacion 'Mensajeria'. El hecho de que este vacio nos permite que usted con solo hacer click
+ingrese a los urls de la aplicacion. Si desea ingresar al administrador de Django en el link provisto por el terminal escriba 
+'/admin/'.
 
 El archivo settings.py contiene las configuraciones del proyecto, nos centraremos en 2:
-INSTALLED_APPS, un diccionario que contiene todas las aplicaciones instaladas en el proyecto, al final del diccionario podra notar
-que dice 'WebF1', nuestra aplicacion esta instalada en el proyecto.
-TEMPLATES y dentro de dicho diccionario buscamos DIRS, esa ruta relativa es la que le indica al proyecto en que lugar buscar los 
+ - INSTALLED_APPS, un diccionario que contiene todas las aplicaciones instaladas en el proyecto, al final del diccionario podra notar
+que dice 'WebF1' y 'Mensajeria', nuestras aplicaciones estan instaladas en el proyecto.
+ - TEMPLATES y dentro de dicho diccionario buscamos DIRS, esa ruta relativa es la que le indica al proyecto en que lugar buscar los 
 templates al momento de llamarlos con las funciones. 
 
 Ahora pasaremos a la siguiente carpeta 'WebF1', en esta carpeta se inicio la aplicacion, y dentro de ella esta todo lo referido 
 a la misma. Iremos describiendo cada archivo que hay en la misma.
 
-Archivo 'models.py'
+ - Archivo 'models.py'
 
 En este archivo se desarrollaron cada uno de los modelos que nos interesaba tener en nuestra aplicacion, los cuales son:
-Team, Empleados, de la cual heredan los modelos Ingeniero y Piloto, y dos modelos independientes llamados Fans y periodistas.
+Team, Empleados, de la cual heredan los modelos Ingeniero y Piloto, y otros modelos independientes llamados Fans, Periodistas, 
+Publicaciones, Creadores y Avatar, cabe aclarar que se importo el modelo User para crear los usuarios.
 Dentro de cada modelo se definen campos de datos tales como nombre, apellido, edad, etc. Cada campo se ve reflejado en 
 la base de datos. La forma de saber si esto funciona es al fijarnos en la base de datos, si tenemos los modelos creados en la 
 misma entonces esta bien. 
 
-Archivo 'forms.py' 
+ - Archivo 'forms.py' 
 
 En este archivo se toman como base los modelos ya creados y mediante la funcion forms.form creamos el codigo que la aplicacion 
 necesita para posteriormente poder desarrollar un API form y que el usuario pueda registrarse y sus datos queden guardados en la
 base de datos. Notese que las variables dentro de cada clase son las mismas que en el archivo 'models.py', esto es asi para que cada
-dato se guarde donde corresponde. 
+dato se guarde donde corresponde.  
 La forma de saber que funciona sera mediante las funciones desarrolladas en el views.py, si los datos ingresados son reflejados 
 en la BD entonces vamos bien.
 
@@ -76,24 +80,54 @@ En el presente archivo se desarrollan las funcionalidades que vamos a necesitar.
 mas que cargar el html de la pagina de inicio cuando usted ingresa al link. Si al clickear en el link se cargo una pagina de inicio
 con lo antes descripto entonces esta funcion esta funcionando correctamente.
 
-La siguiente funcion definida es 'Escuderias', la tarea de esta es tanto cargar el template correspondiente a la misma como cargar 
-el formulario de carga de datos del modelo Team para que los usuarios (escuderias) puedan registrarse en la pagina. 
-La forma de probar esta funcion desde la pagina web son dos: La mas sencilla es desde la barra de navegacion arriba clickear en la seccion 
-'Registrarse', al hacer click nos llevara a esta seccion y alli podremos elegir de que manera nos queremos registrar, en este caso hacemos 
-click en 'Escuderias', esto nos redirigira a una nueva pagina donde habra un formulario de carga de datos para escuderias. Si ingresamos
-los datos, los enviamos y estos se ven reflejados en la BD entonces tanto la funcion como los formularios, y modelos funcionan de manera
-correcta.
-Las siguientes funciones 'Pilotos','Ingenieros','Fans' y 'Periodistas' realizan exactamente la misma tarea que la funcion antes descripta
-solo que plasman sus datos en la BD correspondiente a cada modelo. 
+Se definen las funciones que nos serviran para buscar objetos en la base de datos, las mismas son:
+- 'Busqueda': Esta no hace mas que cargar el template donde podremos ingresar los datos del objeto que queremos buscar. 
+- 'Buscar': Esta funcion nos permite buscar entre los objetos de las clases Team, Ingeniero, Piloto, Fans y Periodistas y mostrar los
+resultados ordenados en un template.
 
-Debajo de estas funciones hay dos mas, definidas como 'Busqueda' y 'Buscar'. La primera no hace mas que cargar el template correspondiente, 
-pero la segunda nos permite mediante un nombre encontrar aquellos datos que necesitamos y mostrarlos en un template correspondiente 
-de manera ordenada. 
+Posteriormente se encuentran las funciones que nos permiten interactuar en la Web en forma de usuario, a continuacion las enlistamos 
+y aclaramos brevemente su funcionamiento.
+- 'Register': Esta funcion nos permite crear un usuario y guardarlo para poder acceder a funciones como mandar mensajes o realizar
+publicaciones.
+- 'Login': Esta funcion nos permite, una vez creado el usuario, iniciar sesion.
+- 'Logout': Esta funcion nos permite, una vez creado el usuario y con la sesion iniciada, cerrar sesion.
+- 'ModificarUsuario': Esta funcion nos permite modificar los datos del usuario y guardarlos.
+- 'DetalleUsuario': Esta funcion carga un template en el que se veran los datos detallados del usuario actual.
+- 'AgregarAvatar': Esta funcion nos permitira agregarle una imagen a nuestro usuario.
+
+A partir de aqui el documento contiene comentarios que lo dividen siempre igual, ya que lo que tenemos a continuacion 
+son los CRUD's de cada clase. Un CRUD (Create, Read, Update, Delete) es una parte del codigo en la que se definen 
+funciones, que como lo dicen sus siglas en ingles nos permiten crear, leer, modificar y eliminar un objeto de una clase. 
+Procederemos a explicar como funciona el CRUD de la clase Team, y  solo este, debido a que luego se realiza exactamente 
+lo mismo para las demas clases, por lo que se puede hacer extensiva esta explicacion para ellas. 
+
+CRUD escuderias:
+- Create = Funcion 'Escuderias': 
+    En esta funcion lo que hacemos es crear un objeto de la clase team, para ello hacemos uso de un formulario creado 
+    previamente para esta clase llamado 'TeamForm' que nos permitira llevar los datos ingresados en formulario a la BD 
+    y guardarlos en los campos correspondientes del modelo Team. 
+- Read = Funcion 'LeerEscuderias': 
+    Aqui lo que hacemos es traer todos los objetos de esta clase creados y mostrarlos en forma de lista, para posteriormente
+    poder modificarlos, eliminarlos o verlos en detalle. 
+- Update = Funcion 'ModificarEscuderia':
+    Esta funcion nos permite modificar un objeto en particular asignandole nuevos valores a los campos que ya teniamos 
+    anteriormente. 
+- Delete = Funcion 'EliminarEscuderia':
+    Esta funcion elimina el objeto en particular que nosotros seleccionemos. 
+
+Cabe aclarar que en cada division CRUD agregamos una ultima funcion, la cual nos permite ver un objeto seleccionado en detalle.
+Esta funcion se llama, en el caso de escuderias 'DetalleEscuderia'.
+
+Por ultimo en este archivo tenemos un apartado de publicaciones, este conjunto de funciones nos permite crear una nueva publicacion,
+listar las publicaciones que ya hay realizadas, eliminar una publicacion y ver en detalle una publicacion en especifico.  
+
+Nota: La funcion 'AboutUs' carga el template en el que se encuentran los datos de los creadores del sitio web.
 
 Archivo 'urlsApp.py'
 
 Este archivo es similar al que esta en el proyecto, posee un diccionario urlpatterns en el cual se encuentran las rutas a cada una de
-las funciones del archivo views.py. 
+las funciones del archivo views.py. Notese que la variable urlpatterns esta ordenada siguiendo la misma division de CRUDs que en el 
+archivo views.py, esto permite rapidez en caso de querer corregir o modificar algo en el codigo. 
 
 Carpeta 'static' 
 
@@ -126,10 +160,8 @@ http://127.0.0.1:8000/Busqueda
 El archivo 'Resultados.html' contiene la estructura de la pagina donde se veran reflejados los resultados de la busqueda que hemos 
 realizado con anterioridad. Nosotros hemos precargado algunos datos en nuestra base de datos a fin de verificar que todo el codigo
 funciona de manera correcta y ahora haremos uso de estos para verificar la funcionalidad. 
-Hemos cargado 1 objeto de cada modelo, por lo que al buscar deberan aparecer los datos simplemente de ese objeto. Se muestran datos
-de una clase llamada empleados, de la cual, como explicamos antes, heredan los modelos piloto e ingeniero, por lo que los datos reflejados
-en este apartado seran tanto de los objetos piloto como ingeniero. A continuacion los links para probar que la busqueda en la base 
-de datos y todas las funcionalidades necesarios funcionan de manera correcta:
+Hemos cargado 1 objeto de cada modelo, por lo que al buscar deberan aparecer los datos simplemente de ese objeto. A continuacion los
+links para probar que la busqueda en la base de datos y todas las funcionalidades necesarios funcionan de manera correcta:
 
 Objeto Team: 'http://127.0.0.1:8000/Buscar/?buscar=Mercedes+Benz'
 
@@ -141,11 +173,35 @@ Objeto Fan: 'http://127.0.0.1:8000/Buscar/?buscar=Minguito'
 
 Objeto Periodista: 'http://127.0.0.1:8000/Buscar/?buscar=Pepe'
 
-Si en algun momento se carga algun otro objeto en la base de datos, para poder buscarlo, como aclara en la pagina de busqueda, simplemente
-se debe introducir el nombre, y en la pagina resultados se veran reflejados todos los objetos de cada clase que contengan ese nombre. 
+Si en algun momento se carga algun otro objeto en la base de datos, para poder buscarlo, como aclara en la pagina de busqueda, 
+simplemente se debe introducir el nombre, y en la pagina resultados se veran reflejados todos los objetos de cada clase que 
+contengan ese nombre. 
 
-Si al seguir cada paso listado hasta aqui la pagina respondio de manera correcta entonces quiere decir que el codigo funciona de la forma que 
-esperabamos. 
+Como explicamos con anterioridad a cada objeto se lo puede crear, leer, modificar y eliminar, esto se realiza en diferentes 
+templates a continuacion enlistaremos los mismos para los objetos de la clase escuderia, al igual que antes, esta explicacion
+se hace extensiva a todas las clases. 
+
+Template para crear un objeto escuderia: 'Escud.html', en este template tenemos el formulario para la creacion de un objeto
+    escuderia. Para probar este template ingrese a 'http://127.0.0.1:8000/Escuderias/', aqui va a encontrar un formulario de 
+    inscripcion, si lo completa se realizara la inscripcion y lo enviara al inicio.
+Template que muestra los objetos: 'MostrarEscuderias.html', en este template se enlistan todas las escuderias inscriptas en
+    la pagina web. En caso de no haber inscriptos se mostrara un mensaje de que 'Aun no hay inscriptos'. 
+    Para probar esto ingrese a 'http://127.0.0.1:8000/MostrarEscuderias/'.
+Template que permite realiza modificaciones: 'ModificarEscuderia.html', aqui podremos modificar los datos de una escuderia en 
+    particular y guardarlos. Para poder probar este template debe haber generado un objeto previamente, ya que por url hay 
+    que pasarle un id de cada objeto. Sugerimos que desde la direccion de Mostrar escuderias seleccione un objeto y le de a 
+    modificar esto lo redirigira al template descripto y podra modificar el objeto.
+Template que muestra la info de un objeto: 'EscuderiaDetail.html' en este template mostramos la informacion ampliada de un 
+    un objeto en particular. Para poder probar este template debe haber generado un objeto previamente, ya que por url hay 
+    que pasarle un id de cada objeto. Sugerimos que desde la direccion de Mostrar escuderias seleccione un objeto y le de a 
+    detalle esto lo redirigira al template descripto y podra ver la informacion ampliada del objeto.
+
+No hay un template especifico para eliminar un objeto, esta accion se puede realizar desde los templates en donde se enlistan
+todos los objetos, o desde el detalle de un objeto en particular, simplemente hay que clickear en el boton de eliminar objeto.
+
+
+Si al seguir cada paso listado hasta aqui la pagina respondio de manera correcta entonces quiere decir que el codigo funciona 
+de la forma que esperabamos. 
 -----------------------------------------------------------------------------------------------------------------
 
 COMO ARMAMOS EL PROYECTO 

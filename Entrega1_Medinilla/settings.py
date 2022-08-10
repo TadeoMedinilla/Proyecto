@@ -38,8 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'WebF1',
-    'Mensajeria',
-    'ckeditor']
+    'Mensajeria']
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

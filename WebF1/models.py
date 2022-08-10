@@ -30,7 +30,6 @@ class Team(models.Model):
         return (f'Nombre: {self.escuderia}.\nNacionalidad: {self.nacionalidad}.')
 
 class Empleado(models.Model):
-#La hago abstracta para que no genere una tabla innecesaria 
     
     nombre=  models.CharField(max_length=15, default='')
     apellido= models.CharField(max_length=15, default='')
