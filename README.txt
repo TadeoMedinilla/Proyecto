@@ -1,13 +1,23 @@
 ENTREGA DEL PROYECTO FINAL
 Plataforma: Coderhouse
+
 Grupo conformado por:
 - Sergio Andrade
 - Tomas Ruiz
 - Tadeo Medinilla
 
+Antes de comenzar con el desarrollo de este archivo los invitamos a acceder al siguiente link donde encontraran una pequeña
+introduccion audiovisual al proyecto que desarrollamos. 
+Link al video de presentacion: ' https://drive.google.com/file/d/1ZqyH5i9KlsVTbbwbwjB05Idfyat0TSJ9/view?usp=sharing '
+
 Tema: En el proyecto desarrollamos una pagina web sobre la F1 donde los usuarios pogran registrarse, mandar mensajes a
 otros usuarios, leer y crear publicaciones. A su vez entidades como escuderias, ingenieros, pilotos, periodistas y Fans
 podran inscribirse en una base de datos donde sus datos quedaran guardados y podran ser mostrados, modificados y eliminados.
+
+Desarrollo: La metodologia que empleamos para el desarrollo de este proyecto fue realizar videollamadas y debatir las ideas 
+que iban surgiendo y escribiendo el codigo todos juntos, esto nos permitio aclarar dudas que surgieron en el camino, y que 
+todos tomaramos participacion en todos los estadios del proyecto, es por eso que se hace dificil definir de manera puntual
+que hizo cada uno. 
 
 En el siguiente documento se detalla:
 
@@ -199,9 +209,36 @@ Template que muestra la info de un objeto: 'EscuderiaDetail.html' en este templa
 No hay un template especifico para eliminar un objeto, esta accion se puede realizar desde los templates en donde se enlistan
 todos los objetos, o desde el detalle de un objeto en particular, simplemente hay que clickear en el boton de eliminar objeto.
 
-
 Si al seguir cada paso listado hasta aqui la pagina respondio de manera correcta entonces quiere decir que el codigo funciona 
 de la forma que esperabamos. 
+
+Para finalizar hablaremos de los archivos dentro de la carpeta 'Mensajeria' en la cual se desarrollo la aplicacion que permite 
+a los usuarios enviar y recibir mensajes. 
+
+Al igual que en la carpeta anterior los archivos 'modelsMensajeria.py', 'formsMensajeria.py' y 'urlsMensajeria.py' cumplen las mismas funciones, por 
+lo que no nos extenderemos demasiado. En el archivo modelsMensajeria.py encontramos los modelos de datos que creemos necesarios para 
+el desarrollo de la aplicacion, en el archivo 'formsMensajeria.py' se encuentran los formularios que nos permitiran guardar los
+datos en los campos correspondientes a la hora de cargarlos desde la web, y en el urlsMensajeria.py se encuentran las direcciones
+que relacionan las funciones con el url de la web. 
+
+'viewsMensajeria.py' 
+
+En este archivo desarrollamos las funciones necesarias para poder crear un mensaje nuevo, mostrar los mensajes que recibimos, 
+responder los mensajes pendientes y eliminar los mensajes que no deseamos tener. 
+A continuacion enlistamos las funciones y su comportamiento esperado:
+    - 'Mensaje': Esta funcion nos permite que, con la sesion iniciada, los usuarios creen un nuevo mensaje y lo envien a otro 
+    usuario registrado en la pagina. 
+    - 'MostrarMensajes': Esta funcion permite que al ingresar a la seccion mensajes se enlisten todos los mensajes que hemos
+    recibido. 
+    - 'ResponderMensaje': Como su nombre lo indica con esta funcion realizamos la respuesta de un mensaje en particular.
+    - 'EliminarMensaje': Nos permite eliminar un mensaje en particular. 
+
+Se recomienda que para probar estas funcionalidades se creen dos usuarios, ingresando en uno de ellos se envie un mensaje al 
+otro,  luego se inicie sesion con el otro usuario, vaya a la seccion mensajes y desde alli podra ver el mensaje, reponderlo
+o eliminarlo segun desee. En caso de responderlo puede iniciar sesion nuevamente con el primer usuario, ingresar a la seccion 
+mensajes y alli vera la respuesta. 
+
+
 -----------------------------------------------------------------------------------------------------------------
 
 COMO ARMAMOS EL PROYECTO 
@@ -211,6 +248,9 @@ no es aleatorio, sino que este es el orden que nosotros seguimos para armar nues
 Primero se crearon los modelos, luego las formas, luego las funciones para cargar los datos de dichos modelos, luego los templates
 necesarios para que el usuario pueda interactuar y registrarse y luego las funciones de busqueda en la base de datos para poder 
 acceder a los datos ya registrados, y por ultimo los templates para que el usuario pueda buscar. 
+
+Asi concluye nuestro proyecto, muchas gracias por tomarse el tiempo de leer este archivo y de realizar la prueba de la pagina. 
+
 
 
 

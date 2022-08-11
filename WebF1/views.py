@@ -23,9 +23,9 @@ def Inicio(request):
 
 def AboutUs(request):
 
-    tomas = Creador(nombre='Tomas', apellido='Ruiz', descripcion='tomas descripcion')
-    sergio = Creador(nombre='Sergio', apellido='Andrade', descripcion='sergio descripcion')
-    tadeo = Creador(nombre='Tadeo', apellido='Medinilla', descripcion='tadeo descripcion')
+    tomas = Creador(nombre='Tomas', apellido='Ruiz', descripcion='Entusiasta de la programación, actualmente estudiando la carrera de analista en sistemas y gran fan del actual campeón del mundo Max Verstappen')
+    sergio = Creador(nombre='Sergio', apellido='Andrade', descripcion='Ingeniero Mecánico, apasionado por la formula 1, actualmente trabajando en desarrollo de lubricantes para la marca PUMA ENERGY.')
+    tadeo = Creador(nombre='Tadeo', apellido='Medinilla', descripcion='Estudiante de Ingenieria Electromecanica en la UNC, fanatico de los deportes de automovilismo y de la mecanica automotriz. ')
     notificacion = 'Aquí conoceras mas sobre nosotros.'
     modelo={'tomas': tomas, 'sergio':sergio,'tadeo':tadeo, 'notificacion':notificacion}
 
